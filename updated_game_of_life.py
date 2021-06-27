@@ -21,20 +21,20 @@ class Life:
         self.height = 60
         self.width_to_height_ratio = 16/9.
         self.width = self.width_to_height_ratio*self.height
-        self.num_species = 6
+        self.num_species = 4
         self.particles_per_species = 120
         self.total_particles = self.num_species * self.particles_per_species
 
         # particle parameters
-        self.repelling_force = 8 # force active if r < separation radius
-        self.temperature = 18 # controls random fluctuations in particle velocities
-        self.friction_coefficient = 90
-        self.separation_radius = 14 # mean separation radius
-        self.interaction_radius = 20 # mean interaction radius
+        self.repelling_force = 4 # force active if r < separation radius
+        self.temperature = 0 # controls random fluctuations in particle velocities
+        self.friction_coefficient = 20
+        self.separation_radius = 25 # mean separation radius
+        self.interaction_radius = 25 # mean interaction radius
         self.force_strength = 10 # inter-particle force strength
         self.close_range_factor = 2 # force strength multiplier at r=0
-        self.dist_range_factor = 1 # force strength multiplier at r=self.height
-        self.deviation = 0.1 # spread in species parameters
+        self.dist_range_factor = 2 # force strength multiplier at r=self.height
+        self.deviation = 0.05 # spread in species parameters
         self.seed_range = 0.9 # initial position spread
 
     def block_matrix(self, p0, p_std, positive=False):
