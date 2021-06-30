@@ -2,7 +2,7 @@
 Agent simulation (copied from Youtube)
 
 
-# TODO !!!!!! 
+# TODO 
 
 * optimize like here:
 * https://github.com/google/jax-md/blob/master/notebooks/meta\_optimization.ipynb
