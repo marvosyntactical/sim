@@ -20,29 +20,29 @@ class Life:
         self.dt = 0.01
         self.height = 60
         self.width_to_height_ratio = 16/9.
-        self.width = int(self.width_to_height_ratio*self.height)
-        self.num_species = 8
-        self.particles_per_species = 100
+        self.width = self.width_to_height_ratio*self.height
+        self.num_species = 6
+        self.particles_per_species = 120
         self.total_particles = self.num_species * self.particles_per_species
 
         # particle parameters
         self.repelling_force = 8 # force active if r < separation radius
         self.temperature = 18 # controls random fluctuations in particle velocities
-        self.friction_coefficient = 70
+        self.friction_coefficient = 90
         self.separation_radius = 14 # mean separation radius
         self.interaction_radius = 20 # mean interaction radius
         self.force_strength = 10 # inter-particle force strength
         self.close_range_factor = 2 # force strength multiplier at r=0
         self.dist_range_factor = 1 # force strength multiplier at r=self.height
-        self.deviation = 0.25 # spread in species parameters
+        self.deviation = 0.1 # spread in species parameters
         self.seed_range = 0.9 # initial position spread
 
-    def block_matrix(self, p_mu, p_std, positive=False):
+    def block_matrix(self, p0, p_std, positive=False):
         """
         generates block matrix
         (used for assigning parameters to num_species of particles)
         """
-        m = np.random.normal(p_mu, p_std, (self.num_species, self.num_species))
+        m = np.random.normal(p0, p_std, (self.num_species, self.num_species))
         m = m.repeat(self.particles_per_species,axis=1).repeat(self.particles_per_species,axis=0)
 
         if positive:
@@ -56,7 +56,7 @@ class Life:
         """
         x[x>= self.width]  -= 2*self.width
         x[x<=-self.width]  += 2*self.width
-        y[y> self.height]  -= 2*self.height
+        y[y> self.height] -= 2*self.height
         y[y<=-self.height] += 2*self.height
 
         return x,y
@@ -157,7 +157,7 @@ class Life:
         # parameter matrices
         self.force_radius = self.block_matrix(self.interaction_radius,self.interaction_radius*self.deviation,True)
         self.separation = self.block_matrix(self.separation_radius, self.separation_radius*self.deviation,True)
-        self.forces = self.block_matrix(0, self.force_strength)
+        self.forces = self.block_matrix(0,self.force_strength)
         self.rep_force = self.block_matrix(self.repelling_force, self.repelling_force * self.deviation,True)
 
         # species properties
